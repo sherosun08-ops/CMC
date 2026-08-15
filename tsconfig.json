@@ -1,0 +1,39 @@
+{
+  "compilerOptions": {
+    "target": "ES2022",
+    "module": "ESNext",
+    "moduleResolution": "bundler",
+    "lib": ["ES2022", "DOM", "DOM.Iterable"],
+    "jsx": "preserve",
+    "strict": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "incremental": true,
+    "declaration": true,
+    "declarationMap": true,
+    "sourceMap": true,
+    "outDir": "dist",
+    "baseUrl": ".",
+    "paths": {
+      "@cmc/db": ["packages/db/src"],
+      "@cmc/auth": ["packages/auth/src"],
+      "@cmc/core": ["packages/core/src"],
+      "@cmc/cms": ["packages/cms/src"],
+      "@cmc/ecommerce": ["packages/ecommerce/src"],
+      "@cmc/page-builder": ["packages/page-builder/src"],
+      "@cmc/admin": ["packages/admin/src"],
+      "@cmc/ui": ["packages/ui/src"],
+      "@cmc/api": ["packages/api/src"],
+      "@cmc/plugins": ["packages/plugins/src"],
+      "@cmc/search": ["packages/search/src"],
+      "@cmc/media": ["packages/media/src"],
+      "@cmc/notifications": ["packages/notifications/src"],
+      "@cmc/audit-log": ["packages/audit-log/src"],
+      "@cmc/workflows": ["packages/workflows/src"]
+    }
+  },
+  "exclude": ["node_modules", "dist", ".next"]
+}

@@ -1,0 +1,105 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:16-alpine
+    container_name: cmc-postgres
+    environment:
+      POSTGRES_USER: ${DB_USER:-cmc}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_DB: ${DB_NAME:-cmc}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    restart: unless-stopped
+    networks:
+      - cmc-network
+
+  redis:
+    image: redis:7-alpine
+    container_name: cmc-redis
+    volumes:
+      - redis_data:/data
+    restart: unless-stopped
+    networks:
+      - cmc-network
+
+  meilisearch:
+    image: getmeili/meilisearch:v1.7
+    container_name: cmc-search
+    environment:
+      MEILI_MASTER_KEY: ${MEILI_MASTER_KEY}
+      MEILI_NO_ANALYTICS: 'true'
+    volumes:
+      - meili_data:/meili_data
+    restart: unless-stopped
+    networks:
+      - cmc-network
+
+  api:
+    image: cmc/api:latest
+    build:
+      context: .
+      dockerfile: docker/api.Dockerfile
+    depends_on:
+      - postgres
+      - redis
+      - meilisearch
+    environment:
+      DATABASE_URL: postgresql://${DB_USER:-cmc}:${DB_PASSWORD}@postgres:5432/${DB_NAME:-cmc}
+      REDIS_URL: redis://redis:6379
+      NODE_ENV: production
+      PORT: 4000
+      JWT_SECRET: ${JWT_SECRET}
+      JWT_REFRESH_SECRET: ${JWT_REFRESH_SECRET}
+      MEILI_HOST: http://meilisearch:7700
+      MEILI_MASTER_KEY: ${MEILI_MASTER_KEY}
+      S3_ENDPOINT: ${S3_ENDPOINT}
+      S3_ACCESS_KEY: ${S3_ACCESS_KEY}
+      S3_SECRET_KEY: ${S3_SECRET_KEY}
+      S3_BUCKET: ${S3_BUCKET:-cmc-media}
+      CORS_ORIGIN: ${CORS_ORIGIN:-https://admin.cmc.io}
+    restart: unless-stopped
+    networks:
+      - cmc-network
+    ports:
+      - '4000:4000'
+
+  admin:
+    image: cmc/admin:latest
+    build:
+      context: .
+      dockerfile: docker/admin.Dockerfile
+    depends_on:
+      - api
+    environment:
+      NEXT_PUBLIC_API_URL: https://api.cmc.io/api
+      NODE_ENV: production
+    restart: unless-stopped
+    networks:
+      - cmc-network
+    ports:
+      - '3000:3000'
+
+  nginx:
+    image: nginx:alpine
+    container_name: cmc-nginx
+    depends_on:
+      - api
+      - admin
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf:ro
+    ports:
+      - '80:80'
+      - '443:443'
+    restart: unless-stopped
+    networks:
+      - cmc-network
+
+networks:
+  cmc-network:
+    driver: bridge
+
+volumes:
+  postgres_data:
+  redis_data:
+  meili_data:

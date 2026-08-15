@@ -1,0 +1,111 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:16-alpine
+    container_name: cmc-postgres
+    environment:
+      POSTGRES_USER: cmc
+      POSTGRES_PASSWORD: cmc_dev_password
+      POSTGRES_DB: cmc
+    ports:
+      - '5432:5432'
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ['CMD-SHELL', 'pg_isready -U cmc']
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  redis:
+    image: redis:7-alpine
+    container_name: cmc-redis
+    ports:
+      - '6379:6379'
+    volumes:
+      - redis_data:/data
+    healthcheck:
+      test: ['CMD', 'redis-cli', 'ping']
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  meilisearch:
+    image: getmeili/meilisearch:v1.7
+    container_name: cmc-search
+    environment:
+      MEILI_MASTER_KEY: cmc_dev_meili_key
+      MEILI_NO_ANALYTICS: 'true'
+    ports:
+      - '7700:7700'
+    volumes:
+      - meili_data:/meili_data
+
+  minio:
+    image: minio/minio:latest
+    container_name: cmc-storage
+    command: server /data --console-address ':9001'
+    environment:
+      MINIO_ROOT_USER: cmc
+      MINIO_ROOT_PASSWORD: cmc_dev_password
+    ports:
+      - '9000:9000'
+      - '9001:9001'
+    volumes:
+      - minio_data:/data
+
+  api:
+    build:
+      context: ..
+      dockerfile: docker/api.Dockerfile
+    container_name: cmc-api
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    environment:
+      DATABASE_URL: postgresql://cmc:cmc_dev_password@postgres:5432/cmc
+      REDIS_URL: redis://redis:6379
+      NODE_ENV: development
+      PORT: 4000
+      JWT_SECRET: dev_jwt_secret_min_32_chars_long!!
+      JWT_REFRESH_SECRET: dev_refresh_secret_min_32_chars!!
+      MEILI_HOST: http://meilisearch:7700
+      MEILI_MASTER_KEY: cmc_dev_meili_key
+      S3_ENDPOINT: http://minio:9000
+      S3_ACCESS_KEY: cmc
+      S3_SECRET_KEY: cmc_dev_password
+      S3_BUCKET: cmc-media
+    ports:
+      - '4000:4000'
+    volumes:
+      - ..:/app
+      - /app/node_modules
+      - /app/apps/api/node_modules
+    command: pnpm --filter @cmc/api-server dev
+
+  admin:
+    build:
+      context: ..
+      dockerfile: docker/admin.Dockerfile
+    container_name: cmc-admin
+    depends_on:
+      - api
+    environment:
+      NEXT_PUBLIC_API_URL: http://localhost:4000/api
+      NODE_ENV: development
+    ports:
+      - '3000:3000'
+    volumes:
+      - ..:/app
+      - /app/node_modules
+      - /app/apps/admin/node_modules
+    command: pnpm --filter @cmc/admin dev
+
+volumes:
+  postgres_data:
+  redis_data:
+  meili_data:
+  minio_data:

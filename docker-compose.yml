@@ -1,0 +1,15 @@
+services:
+  cmc:
+    build: .
+    ports:
+      - "4000:4000"
+    environment:
+      NODE_ENV: production
+      CMC_SECRET: ${CMC_SECRET:?set CMC_SECRET in your environment}
+      PUBLIC_URL: ${PUBLIC_URL:-http://localhost:4000}
+    volumes:
+      - cmc-data:/app/data
+    restart: unless-stopped
+
+volumes:
+  cmc-data:

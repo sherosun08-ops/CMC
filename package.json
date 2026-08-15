@@ -1,0 +1,37 @@
+{
+  "name": "unified-cmc",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Unified CMS - Combining the best of Directus, Payload, Filament, Bagisto, Medusa, NocoBase, Strapi, GrapesJS, Refine, and Saleor",
+  "scripts": {
+    "dev": "turbo dev",
+    "build": "turbo build",
+    "lint": "turbo lint",
+    "test": "turbo test",
+    "test:e2e": "turbo test:e2e",
+    "format": "prettier --write \"**/*.{ts,tsx,js,jsx,json,md}\"",
+    "db:generate": "pnpm --filter @cmc/db generate",
+    "db:push": "pnpm --filter @cmc/db push",
+    "db:migrate": "pnpm --filter @cmc/db migrate",
+    "db:seed": "pnpm --filter @cmc/db seed",
+    "docker:dev": "docker compose -f docker/docker-compose.dev.yml up",
+    "docker:prod": "docker compose -f docker/docker-compose.prod.yml up",
+    "clean": "turbo clean && rm -rf node_modules"
+  },
+  "devDependencies": {
+    "@types/node": "^20.11.0",
+    "@typescript-eslint/eslint-plugin": "^7.0.0",
+    "@typescript-eslint/parser": "^7.0.0",
+    "eslint": "^8.56.0",
+    "prettier": "^3.2.0",
+    "prettier-plugin-tailwindcss": "^0.5.0",
+    "turbo": "^2.0.0",
+    "typescript": "^5.3.0",
+    "vitest": "^1.2.0"
+  },
+  "engines": {
+    "node": ">=20.0.0",
+    "pnpm": ">=9.0.0"
+  },
+  "packageManager": "pnpm@9.1.0"
+}

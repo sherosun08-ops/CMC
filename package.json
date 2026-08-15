@@ -1,37 +1,35 @@
 {
-  "name": "unified-cmc",
-  "version": "1.0.0",
+  "name": "cmc",
+  "version": "0.1.0",
   "private": true,
-  "description": "Unified CMS - Combining the best of Directus, Payload, Filament, Bagisto, Medusa, NocoBase, Strapi, GrapesJS, Refine, and Saleor",
+  "description": "CMC — Composable Management Core. One unified data, content and commerce platform.",
+  "type": "module",
   "scripts": {
-    "dev": "turbo dev",
-    "build": "turbo build",
-    "lint": "turbo lint",
-    "test": "turbo test",
-    "test:e2e": "turbo test:e2e",
-    "format": "prettier --write \"**/*.{ts,tsx,js,jsx,json,md}\"",
-    "db:generate": "pnpm --filter @cmc/db generate",
-    "db:push": "pnpm --filter @cmc/db push",
-    "db:migrate": "pnpm --filter @cmc/db migrate",
-    "db:seed": "pnpm --filter @cmc/db seed",
-    "docker:dev": "docker compose -f docker/docker-compose.dev.yml up",
-    "docker:prod": "docker compose -f docker/docker-compose.prod.yml up",
-    "clean": "turbo clean && rm -rf node_modules"
+    "dev": "tsx watch src/index.ts",
+    "start": "tsx src/index.ts",
+    "seed": "tsx scripts/seed.ts",
+    "build:admin": "tsx scripts/build-admin.ts",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run",
+    "test:watch": "vitest"
+  },
+  "dependencies": {
+    "@hono/node-server": "^1.13.7",
+    "better-sqlite3": "^13.0.3",
+    "hono": "^4.6.16",
+    "zod": "^3.24.1"
   },
   "devDependencies": {
-    "@types/node": "^20.11.0",
-    "@typescript-eslint/eslint-plugin": "^7.0.0",
-    "@typescript-eslint/parser": "^7.0.0",
-    "eslint": "^8.56.0",
-    "prettier": "^3.2.0",
-    "prettier-plugin-tailwindcss": "^0.5.0",
-    "turbo": "^2.0.0",
-    "typescript": "^5.3.0",
-    "vitest": "^1.2.0"
+    "@types/better-sqlite3": "^7.6.13",
+    "@types/node": "^22.10.5",
+    "@types/react": "^18.3.18",
+    "@types/react-dom": "^18.3.5",
+    "esbuild": "^0.24.2",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "tsx": "^4.19.2",
+    "typescript": "^5.7.3",
+    "vitest": "^2.1.8"
   },
-  "engines": {
-    "node": ">=20.0.0",
-    "pnpm": ">=9.0.0"
-  },
-  "packageManager": "pnpm@9.1.0"
+  "engines": { "node": ">=20" }
 }

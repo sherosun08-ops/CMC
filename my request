@@ -1,0 +1,175 @@
+You are an expert software architect. Your task is to analyze 
+the following 10 open source repositories and build ONE unified 
+system that combines the best of all of them.
+
+## Repositories to analyze:
+1. https://github.com/directus/directus
+2. https://github.com/payloadcms/payload
+3. https://github.com/filamentphp/filament
+4. https://github.com/bagisto/bagisto
+5. https://github.com/medusajs/medusa
+6. https://github.com/nocobase/nocobase
+7. https://github.com/strapi/strapi
+8. https://github.com/GrapesJS/grapesjs
+9. https://github.com/refinedev/refine
+10. https://github.com/saleor/saleor
+
+## Your task - Step by Step:
+
+### Step 1: Deep Analysis
+- Clone and read every repository line by line
+- Understand the full architecture of each one
+- List every feature, module, and component
+- Identify the core strengths of each repository
+- Identify weaknesses and gaps in each one
+
+### Step 2: Conflict Resolution
+- Find all duplicate features across repositories
+- Keep only the best implementation of each feature
+- Resolve all technical conflicts
+- Eliminate all redundancy
+- Create a unified data model that covers all systems
+
+### Step 3: Unified Architecture Design
+Design ONE system with:
+- Single codebase
+- Single technology stack (TypeScript + Node.js + React + Next.js)
+- Single database schema (PostgreSQL)
+- Single API layer (REST + GraphQL)
+- Single authentication system
+- Single permission system
+- Single media management
+- Single plugin/extension system
+
+### Step 4: Build the Unified System
+Build a complete system that includes ALL of the following:
+
+#### Admin Panel (from Filament + Directus + Refine)
+- Full dashboard with KPI cards and charts
+- Advanced data tables with sort, filter, search
+- Form builder
+- Media library
+- Role based access control
+- Activity log
+- Notifications center
+- Settings management
+- Multi-language support
+- Dark mode
+
+#### CMS (from Payload + Strapi + Directus)
+- Content type builder (visual)
+- Page builder with drag and drop (from GrapesJS)
+- Blocks system
+- Live preview
+- Version history
+- Scheduled publishing
+- SEO management
+- Multi-language content
+
+#### E-Commerce (from Bagisto + Medusa + Saleor)
+- Product management with variants
+- Category management
+- Inventory management
+- Order management
+- Payment gateways
+- Shipping management
+- Discount and coupon system
+- Customer management
+- Reviews and ratings
+- Multi-currency
+- Multi-store
+
+#### Page Builder (from GrapesJS)
+- Full drag and drop visual editor
+- Component library
+- Theme customization
+- Real-time preview
+- Responsive editing
+- Template system
+- Custom CSS and JS
+
+#### API Layer (from all repositories)
+- REST API auto-generated
+- GraphQL API auto-generated
+- Webhooks system
+- API keys management
+- Rate limiting
+- API documentation
+
+#### Authentication (unified from all)
+- Email and password
+- Social login (Google, Apple, GitHub)
+- Two factor authentication
+- SSO
+- JWT and refresh tokens
+- Session management
+
+#### Plugin System (from NocoBase + Filament)
+- Plugin marketplace
+- Enable and disable modules
+- Custom plugin development
+- Plugin configuration
+- Plugin permissions
+
+### Step 5: Zero Duplication Rules
+- Every feature exists ONCE in the system
+- No duplicate components
+- No duplicate APIs
+- No duplicate database tables
+- No duplicate authentication logic
+- Shared component library used everywhere
+
+### Step 6: Output Requirements
+Produce the following:
+
+1. Complete folder structure
+2. Complete database schema for all modules
+3. Complete API documentation
+4. All backend code (Node.js + TypeScript)
+5. All frontend code (Next.js + React + TypeScript)
+6. All admin panel code
+7. All page builder code
+8. Complete Docker setup
+9. Complete deployment configuration
+10. README with setup instructions
+
+## Technical Requirements:
+- Language: TypeScript (100%)
+- Backend: Node.js + Express or Fastify
+- Frontend: Next.js 14+ with App Router
+- Database: PostgreSQL with Prisma ORM
+- Cache: Redis
+- Search: Meilisearch
+- Storage: S3 compatible
+- Queue: BullMQ
+- Real-time: Socket.io
+- UI Library: Shadcn/ui + Tailwind CSS
+- State Management: Zustand
+- API: tRPC or REST + GraphQL
+- Auth: NextAuth.js or custom JWT
+- Testing: Vitest + Playwright
+- Container: Docker + Docker Compose
+- Package Manager: pnpm
+- Monorepo: Turborepo
+
+## Quality Rules:
+- Clean architecture
+- SOLID principles
+- No code duplication (DRY)
+- Full TypeScript types
+- Error handling everywhere
+- Loading states everywhere
+- Empty states everywhere
+- Mobile responsive
+- RTL support
+- Accessibility (WCAG 2.1)
+- Performance optimized
+- SEO ready
+- Security best practices
+
+## Start now:
+Begin with Step 1. Analyze each repository completely 
+before moving to the next step. 
+Do not skip any step.
+Do not duplicate any feature.
+Build everything in ONE unified TypeScript monorepo.
